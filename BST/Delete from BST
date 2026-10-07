@@ -1,0 +1,26 @@
+class Solution {
+    public Node delNode(Node root, int target) {
+        if(root==null) return null;
+       if(root.data>target){//go left
+          root.left = delNode(root.left,target);
+       }
+       else if(root.data<target){// go right
+          root.right = delNode(root.right,target);
+       }
+       else{// root.data == target
+       //case 1 (leaf Node)
+          if(root.left==null && root.right == null) return null;
+          // Case 2 (1 child node)
+          if(root.left==null) return root.right;
+           if(root.right==null) return root.left;
+           // Case 3 (2 Child Nodes)
+           Node pred = root.left;
+           while(pred.right!=null) pred = pred.right;
+           root.left = delNode(root.left,pred.data);
+           pred.left = root.left;
+           pred.right = root.right;
+           return pred;
+       }
+       return root;
+    }
+}
